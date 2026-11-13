@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#356b50">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Digest">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Digest · Diario digestivo</title>
+<style>
+:root{--bg:#f4f6f2;--card:#fff;--ink:#24352b;--muted:#718076;--line:#e2e9e2;--green:#356b50;--green-pale:#e3f0e8;--field:#fbfcfa;--danger:#a64b43;--shadow:0 5px 22px #1e3b2510}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:650px;margin:auto;min-height:100vh;padding:0 15px 35px}
+header{padding:20px 2px 14px;display:flex;justify-content:space-between;align-items:center}.eyebrow{font-size:11px;letter-spacing:.12em;color:var(--muted);font-weight:700}.brand{font-size:26px;font-weight:750;letter-spacing:-.04em;margin-top:2px}.leaf{background:var(--green-pale);color:var(--green);border-radius:14px;padding:10px;font-size:21px}
+.datebar{display:flex;align-items:center;gap:10px;margin:0 0 14px}.datebar input{max-width:180px}.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:#e9eee8;padding:4px;border-radius:14px;margin-bottom:18px}.tab{border:0;background:transparent;color:#69786e;padding:10px 3px;border-radius:11px;font-size:12px;font-weight:600}.tab.active{background:white;color:var(--green);box-shadow:0 1px 5px #0000000c}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:14px;box-shadow:var(--shadow)}h1{font-size:20px;margin:0 0 5px;letter-spacing:-.025em}.sub{font-size:13px;color:var(--muted);margin:0 0 17px;line-height:1.45}
+label{display:block;font-size:13px;font-weight:650;margin:14px 0 7px}.field{width:100%;border:1px solid var(--line);background:var(--field);border-radius:11px;padding:11px 12px;color:var(--ink);font-size:15px;min-width:0}.field:focus{outline:2px solid #a9c9b3;border-color:var(--green)}textarea.field{resize:vertical}.row{display:flex;gap:8px;align-items:center}.wrap{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--line);border-radius:999px;padding:8px 11px;background:white;color:var(--ink);font-size:13px}.chip.active{background:var(--green-pale);border-color:#9ac1a7;color:#285a3e}.primary{width:100%;border:0;border-radius:12px;background:var(--green);color:white;padding:13px;font-weight:700;margin-top:16px}.secondary{border:1px solid var(--line);background:white;color:var(--green);padding:10px 12px;border-radius:11px;font-weight:650;font-size:13px}.remove{border:0;background:#f8eeec;color:var(--danger);border-radius:9px;width:34px;height:38px;font-size:18px;flex:none}
+.foodrow{display:grid;grid-template-columns:minmax(0,1fr) 112px 34px;gap:7px;margin:8px 0}.foodrow .field{padding:10px;font-size:14px}
+.intensity{flex:1;border:1px solid var(--line);background:white;border-radius:11px;padding:11px 4px;font-size:13px;color:var(--ink)}.intensity.active{background:var(--green-pale);border-color:#9ac1a7;color:#285a3e;font-weight:700}
+.hint{font-size:12px;color:var(--muted);margin-top:6px}.record{border:1px solid var(--line);border-radius:13px;padding:12px;margin-top:9px}.recordtop{display:flex;justify-content:space-between;gap:10px;font-size:14px;font-weight:700}.recordmeta{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}.record ul{padding-left:18px;margin:7px 0 0;font-size:13px}.record li{margin:3px 0}.record-actions{display:flex;justify-content:flex-end;margin-top:8px}.delete{border:0;background:none;color:var(--danger);font-size:12px;padding:4px}
+.empty{color:var(--muted);font-size:13px;padding:12px 2px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:22px 0 5px}.sectionhead strong{font-size:15px}.count{font-size:12px;color:var(--muted)}.notice{background:#f1f5ef;border-radius:11px;padding:10px 12px;color:#5b6d60;font-size:12px;line-height:1.5;margin-top:14px}
+.footer{font-size:11px;color:var(--muted);text-align:center;padding:12px 5px 25px;line-height:1.5}
+@media(max-width:380px){.tab{font-size:11px}.foodrow{grid-template-columns:minmax(0,1fr) 92px 32px}.panel{padding:14px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><div class="eyebrow">MI DIARIO</div><div class="brand">Digest</div></div><div class="leaf">✳</div></header>
+<div class="datebar"><label for="day" style="margin:0">Día</label><input id="day" class="field" type="date"></div>
+<nav class="tabs" aria-label="Secciones">
+<button class="tab active" data-tab="meals">🍽 Comidas</button>
+<button class="tab" data-tab="symptoms">♡ Síntomas</button>
+<button class="tab" data-tab="activity">↗ Actividad</button>
+<button class="tab" data-tab="meds">✚ Meds</button>
+</nav>
+<main id="screen"></main>
+<div class="panel" style="margin-top:14px">
+<div class="sectionhead" style="margin:0 0 8px"><strong>Datos y privacidad</strong></div>
+<p class="sub" style="margin-bottom:10px">Tus registros se guardan en el almacenamiento de este navegador, en este dispositivo. No se envían a ningún servidor.</p>
+<div class="row" style="flex-wrap:wrap">
+<button class="secondary" id="export">Exportar CSV</button>
+<button class="secondary" id="backup">Descargar copia JSON</button>
+<label class="secondary" for="restore" style="margin:0;cursor:pointer">Importar copia</label><input id="restore" type="file" accept="application/json" hidden>
+</div>
+<div class="notice">Esta versión es un prototipo de seguimiento personal, no reemplaza una evaluación médica. Recordá hacer copias de seguridad si querés conservar tus datos.</div>
+</div>
+<div class="footer">Digest · Prototipo personal · Versión inicial</div>
+</div>
+<script>
+const $=s=>document.querySelector(s), screen=$('#screen');
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+$('#day').value=today();
+let tab='meals', data=load();
+function load(){try{return JSON.parse(localStorage.getItem('digest-data')||'{}')}catch{return {}}}
+function persist(){localStorage.setItem('digest-data',JSON.stringify(data))}
+function dayRecords(){return data[$('#day').value]||(data[$('#day').value]=[])}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function timeNow(){return new Date().toTimeString().slice(0,5)}
+function field(label,id,placeholder='',type='text'){return `<label for="${id}">${label}</label><input class="field" id="${id}" type="${type}" placeholder="${placeholder}">`}
+function area(label,id,placeholder=''){return `<label for="${id}">${label}</label><textarea class="field" id="${id}" rows="2" placeholder="${placeholder}"></textarea>`}
+function timeField(){return field('Hora','time','','time')}
+function recordsHTML(kind){let rs=dayRecords().filter(r=>r.kind===kind);return `<div class="sectionhead"><strong>Registros de ${kind==='meal'?'hoy':kind==='symptom'?'hoy':kind==='activity'?'hoy':'hoy'}</strong><span class="count">${rs.length} registro${rs.length===1?'':'s'}</span></div>${rs.length?rs.map(r=>`<div class="record"><div class="recordtop"><span>${esc(r.title)}</span><span>${esc(r.time)}</span></div>${r.items?`<ul>${r.items.map(x=>`<li>${esc(x.name)}${x.qty?' — '+esc(x.qty):''}</li>`).join('')}</ul>`:''}<div class="recordmeta">${esc(r.detail||'')}${r.notes?' · '+esc(r.notes):''}</div><div class="record-actions"><button class="delete" data-delete="${esc(r.id)}">Eliminar registro</button></div></div>`).join(''):'<div class="empty">Todavía no hay registros.</div>'}`}
+function addRecord(record){record.id=crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random());dayRecords().unshift(record);persist();render()}
+function deleteHandler(){screen.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este registro?')){let rs=dayRecords();data[$('#day').value]=rs.filter(r=>r.id!==b.dataset.delete);persist();render()}})}
+function mealView(){
+ screen.innerHTML=`<section class="panel"><h1>Registrar comida</h1><p class="sub">Un registro por comida, con todos sus alimentos e ingredientes.</p>
+<label>Tipo de comida</label><div class="wrap" id="mealtypes">${['Desayuno','Almuerzo','Merienda','Cena','Snack','Bebida'].map((x,i)=>`<button class="chip ${i===0?'active':''}" data-kind="${x}">${x}</button>`).join('')}</div>
+<label>Alimentos e ingredientes</label><div id="foodrows"></div><button class="secondary" id="addfood">＋ Agregar alimento</button>
+${timeField()}${area('Notas de la comida (opcional)','notes','Preparación, contexto, dónde comiste…')}
+<button class="primary" id="save">Guardar comida</button></section>${recordsHTML('meal')}`;
+ let kind='Desayuno';
+ $('#mealtypes').onclick=e=>{let b=e.target.closest('[data-kind]');if(!b)return;kind=b.dataset.kind;$('#mealtypes').querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b))};
+ function addFood(name='',qty=''){let d=document.createElement('div');d.className='foodrow';d.innerHTML=`<input class="field foodname" placeholder="Ej. pan" value="${esc(name)}"><input class="field foodqty" placeholder="Cantidad" value="${esc(qty)}"><button class="remove" aria-label="Quitar alimento">×</button>`;d.querySelector('.remove').onclick=()=>d.remove();$('#foodrows').append(d)}
+ $('#addfood').onclick=()=>addFood('','');addFood();addFood();
+ $('#time').value=timeNow();
+ $('#save').onclick=()=>{let items=[...document.querySelectorAll('.foodrow')].map(r=>({name:r.querySelector('.foodname').value.trim(),qty:r.querySelector('.foodqty').value.trim()})).filter(x=>x.name);if(!items.length){alert('Agregá al menos un alimento.');return}addRecord({kind:'meal',title:kind,time:$('#time').value||timeNow(),items,notes:$('#notes').value.trim()})};
+}
+const symptoms=['Hinchazón abdominal','Gases','Dolor abdominal','Cólicos','Reflujo / acidez','Náuseas','Eructos','Sensación de llenura','Saciedad precoz','Digestión lenta','Pesadez','Distensión','Ruidos intestinales','Diarrea','Estreñimiento','Urgencia para evacuar','Evacuación incompleta','Cambios en las heces','Mucosidad en heces','Pérdida de apetito','Vómitos','Ardor estomacal','Dolor al evacuar','Flatulencia'];
+function symptomView(){
+ screen.innerHTML=`<section class="panel"><h1>Registrar síntomas</h1><p class="sub">Elegí uno o varios síntomas. Podés agregar otros que no estén en la lista.</p>
+${field('Buscar síntoma','search','Buscar o escribir un síntoma…')}<div class="wrap" id="symopts" style="margin-top:9px"></div><div id="custombox" style="display:none;margin-top:10px"><input class="field" id="custom" placeholder="Nombre del síntoma"><button class="secondary" id="addcustom" style="margin-top:7px">＋ Agregar síntoma</button></div>
+<div id="chosen" style="margin-top:12px"></div>
+<label>Intensidad</label><div class="row"><button class="intensity" data-level="Ligero">Ligero</button><button class="intensity" data-level="Moderado">Moderado</button><button class="intensity" data-level="Intenso">Intenso</button></div>
+${timeField()}${area('Notas (opcional)','notes','Duración, contexto, relación con comidas…')}<button class="primary" id="save">Guardar síntomas</button></section>${recordsHTML('symptom')}`;
+ let selected=[],level='';
+ function options(){let q=$('#search').value.trim().toLowerCase();let matches=symptoms.filter(s=>s.toLowerCase().includes(q));$('#symopts').innerHTML=matches.map(s=>`<button class="chip ${selected.includes(s)?'active':''}" data-sym="${esc(s)}">${esc(s)}</button>`).join('')+`<button class="chip" id="other">＋ Otro</button>`;$('#custombox').style.display=q&&!symptoms.some(s=>s.toLowerCase()===q)?'block':'none'}
+ function chosen(){$('#chosen').innerHTML=selected.map(s=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px">${esc(s)}<button class="delete" data-rm="${esc(s)}">Quitar</button></div>`).join('')}
+ $('#search').oninput=options;$('#symopts').onclick=e=>{let b=e.target.closest('[data-sym]');if(b){selected=selected.includes(b.dataset.sym)?selected.filter(x=>x!==b.dataset.sym):[...selected,b.dataset.sym];options();chosen()}if(e.target.id==='other')$('#custombox').style.display='block'};
+ $('#addcustom').onclick=()=>{let s=$('#custom').value.trim();if(s&&!selected.includes(s))selected.push(s);$('#custom').value='';options();chosen()};
+ $('#chosen').onclick=e=>{let b=e.target.closest('[data-rm]');if(b){selected=selected.filter(x=>x!==b.dataset.rm);options();chosen()}};
+ screen.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{level=b.dataset.level;screen.querySelectorAll('[data-level]').forEach(x=>x.classList.toggle('active',x===b))});
+ $('#time').value=timeNow();$('#save').onclick=()=>{if(!selected.length||!level){alert('Elegí al menos un síntoma y su intensidad.');return}addRecord({kind:'symptom',title:selected.join(', '),time:$('#time').value||timeNow(),detail:level,notes:$('#notes').value.trim()})};options();
+}
+function activityView(){
+ screen.innerHTML=`<section class="panel"><h1>Registrar actividad</h1><p class="sub">Ejercicio y movimiento cotidiano.</p>
+<label>Tipo de actividad</label><select class="field" id="type">${['Caminata','Pilates','Gimnasio / pesas','Spinning / bicicleta','Yoga / movilidad','Running','Deporte','Actividad cotidiana','Otro'].map(x=>`<option>${x}</option>`).join('')}</select>
+${field('Otra actividad (si elegiste “Otro”)','custom','Describila')}${field('Duración','duration','Minutos','number')}
+<label>Intensidad</label><div class="row"><button class="intensity" data-level="Suave">Suave</button><button class="intensity" data-level="Moderada">Moderada</button><button class="intensity" data-level="Intensa">Intensa</button></div>
+${timeField()}${area('Notas (opcional)','notes','Cómo te sentiste, síntomas antes/después…')}<button class="primary" id="save">Guardar actividad</button></section>${recordsHTML('activity')}`;
+ let level='';screen.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{level=b.dataset.level;screen.querySelectorAll('[data-level]').forEach(x=>x.classList.toggle('active',x===b))});$('#time').value=timeNow();
+ $('#save').onclick=()=>{let duration=Number($('#duration').value);if(!duration||duration<1){alert('Ingresá la duración en minutos.');return}let type=$('#type').value==='Otro'&&$('#custom').value.trim()?$('#custom').value.trim():$('#type').value;addRecord({kind:'activity',title:type,time:$('#time').value||timeNow(),detail:`${duration} minutos${level?' · '+level:''}`,notes:$('#notes').value.trim()})};
+}
+function medsView(){
+ screen.innerHTML=`<section class="panel"><h1>Registrar medicamento</h1><p class="sub">También podés registrar suplementos y tomas omitidas.</p>
+${field('Nombre','name','Ej. medicamento o suplemento')}${field('Dosis','dose','Ej. 1 comprimido, 5 ml, 20 mg')}
+<label>Estado de la toma</label><select id="status" class="field"><option>Tomado</option><option>Omitido</option><option>Pendiente</option></select>
+${timeField()}${area('Notas (opcional)','notes','Motivo, efectos, indicación…')}<button class="primary" id="save">Guardar medicamento</button></section>${recordsHTML('med')}`;
+ $('#time').value=timeNow();$('#save').onclick=()=>{if(!$('#name').value.trim()){alert('Ingresá el nombre del medicamento.');return}addRecord({kind:'med',title:$('#name').value.trim(),time:$('#time').value||timeNow(),detail:[$('#dose').value.trim(),$('#status').value].filter(Boolean).join(' · '),notes:$('#notes').value.trim()})};
+}
+function render(){if(tab==='meals')mealView();if(tab==='symptoms')symptomView();if(tab==='activity')activityView();if(tab==='meds')medsView();deleteHandler()}
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));render()});
+$('#day').onchange=render;
+$('#export').onclick=()=>{let rows=[['Fecha','Sección','Hora','Registro','Detalle','Notas']];Object.entries(data).forEach(([date,rs])=>rs.forEach(r=>rows.push([date,r.kind,r.time,r.title,r.items?r.items.map(x=>x.name+' '+x.qty).join('; '):'',r.detail+' '+r.notes])));let csv=rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n');download(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),'digest-registros.csv')};
+$('#backup').onclick=()=>download(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),'digest-copia.json');
+$('#restore').onchange=async e=>{try{let obj=JSON.parse(await e.target.files[0].text());if(!obj||typeof obj!=='object'||Array.isArray(obj))throw 0;if(confirm('¿Importar esta copia? Los registros actuales se combinarán con los de la copia.')){data={...data,...obj};persist();render();alert('Copia importada.')}}catch{alert('No se pudo leer el archivo.')}e.target.value=''};
+function download(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href)}
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+render();
+</script>
+</body></html>

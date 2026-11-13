@@ -1,0 +1,14 @@
+{
+  "name": "Digest - Diario digestivo",
+  "short_name": "Digest",
+  "description": "Diario personal de comidas, síntomas, actividad y medicamentos.",
+  "lang": "es-AR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f2",
+  "theme_color": "#356b50",
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}
+  ]
+}
